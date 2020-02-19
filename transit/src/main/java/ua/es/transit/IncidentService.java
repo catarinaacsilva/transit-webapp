@@ -1,64 +1,46 @@
 package ua.es.transit;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.HttpCookie;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class IncidentService {
 
-    public static List<Incident> getList(GeoPoint p1, GeoPoint p2, String key){
+    public static List<Incident> getList(GeoPoint p1, GeoPoint p2){
         List<Incident> list = new ArrayList<>();
 
+        // Todas as keys ficam guardadas no ficheiro config.cfg
+        Config cfg = new Config();
+        String key = cfg.getProperty("key");
+
         try {
-            URL url = new URL("http://dev.virtualearth.net/REST/v1/Traffic/Incidents/"+p1+","+p2);
+            URL url = new URL("http://dev.virtualearth.net/REST/v1/Traffic/Incidents/"+p1+","+p2+"?key="+key);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Content-Type", "application/json");
-
+            con.setAllowUserInteraction(true);
             con.setConnectTimeout(5000);
             con.setReadTimeout(5000);
-
-            Map<String, String> parameters = new HashMap<>();
-            parameters.put("key", key);
-
-            System.out.println("URL: "+url);
-
-            System.out.println(ParameterStringBuilder.getParamsString(parameters));
-
-            con.setDoOutput(true);
-            DataOutputStream out = new DataOutputStream(con.getOutputStream());
-            out.writeBytes(ParameterStringBuilder.getParamsString(parameters));
-            out.flush();
-            out.close();
-
 
             int status = con.getResponseCode();
 
             System.out.println(status);
 
-            BufferedReader streamReader = null;
+            boolean isError = (con.getResponseCode() >= 400);
+            InputStream is = isError ? con.getErrorStream() : con.getInputStream();
 
-            if (status > 299) {
-                streamReader = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-            } else {
-                streamReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            }
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> jsonMap = mapper.readValue(is, Map.class);
 
 
-            String inputLine;
-            StringBuffer content = new StringBuffer();
-            while ((inputLine = streamReader.readLine()) != null) {
-                content.append(inputLine);
-            }
-            streamReader.close();
+
+
+            System.out.println(jsonMap);
 
             con.disconnect();
         } catch (Exception e){
