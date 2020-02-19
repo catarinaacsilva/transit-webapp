@@ -1,10 +1,10 @@
-package com.transit.demo;
+package ua.es.transit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class TransitApplicationTests {
 
 	@Test
 	void contextLoads() {
