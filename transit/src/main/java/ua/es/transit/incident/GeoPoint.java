@@ -8,6 +8,14 @@ public class GeoPoint {
         this.lon = lon;
     }
 
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
     public String toString() {
         return lat+","+lon;
     }
