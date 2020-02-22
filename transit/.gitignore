@@ -33,3 +33,6 @@ build/
 ### Extra ###
 Test.java
 config.cfg
+*.class
+.DS_Store
+bin
