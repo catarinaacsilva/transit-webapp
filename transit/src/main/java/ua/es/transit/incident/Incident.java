@@ -2,7 +2,7 @@ package ua.es.transit.incident;
 
 
 
-import ua.es.transit.Config;
+import ua.es.transit.config.Config;
 import ua.es.transit.http.HTTP;
 
 import java.util.ArrayList;
