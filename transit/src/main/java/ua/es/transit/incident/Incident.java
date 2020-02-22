@@ -81,7 +81,6 @@ public class Incident {
                     Matcher m = pattern.matcher(date);
                     m.find();
                     Date d = new Date(Long.parseLong(m.group(1)));
-                    System.out.println(date);
                     list.add(new Incident((String) resource.get("description"), d,
                             (Boolean) resource.get("roadClosed"), p, (Integer) resource.get("type")));
                 }
