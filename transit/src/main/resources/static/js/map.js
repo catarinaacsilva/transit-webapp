@@ -10,8 +10,8 @@ let  types_names = ['NA', 'Accident', 'Congestion', 'Disabled Vehicle', 'Mass Tr
 let map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v11',
-    center: [-8.65362, 41.6412], // starting position
-    zoom: 13 // starting zoom
+	center: [-8.65362, 41.6412], // starting position
+	zoom: 13 // starting zoom
 });
 
 // Add zoom and rotation controls to the map.
