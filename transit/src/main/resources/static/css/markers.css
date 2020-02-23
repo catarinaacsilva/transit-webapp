@@ -1,0 +1,96 @@
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.marker01 {
+  background-image: url('../img/01.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.marker02 {
+  background-image: url('../img/02.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.marker03 {
+  background-image: url('../img/03.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.marker04 {
+  background-image: url('../img/04.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.marker05 {
+  background-image: url('../img/05.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.marker06 {
+  background-image: url('../img/06.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.marker07 {
+  background-image: url('../img/07.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.marker08 {
+  background-image: url('../img/08.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.marker09 {
+  background-image: url('../img/09.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.marker10 {
+  background-image: url('../img/10.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.marker11 {
+  background-image: url('../img/11.png');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
