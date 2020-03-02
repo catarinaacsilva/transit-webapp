@@ -46,18 +46,23 @@ map.on("moveend", function(){
 			let desc = out[i]["description"];
 			let type = ("0" + out[i]["type"]).slice(-2);
 
-			// create a HTML element for each feature
-			var el = document.createElement('div');
-            el.className = 'marker'+type;
+			let p1 = document.location.href.replace("http://localhost:8080/", '');
+			let p2 = types_names[out[i]["type"]].toLowerCase().replace(/\s/g, '');
+			if(p1 === p2 || p1 === '') {
+				// create a HTML element for each feature
+				var el = document.createElement('div');
+				el.className = 'marker'+type;
 
-            // make a marker for each feature and add to the map
-            let oneMarker = new mapboxgl.Marker(el);
-            oneMarker.setLngLat(newLatLng);
-            oneMarker.setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>' + types_names[out[i]["type"]] + '</h3><p><h4>'+desc+'</p></h4>'));
-            oneMarker.addTo(map);
+				// make a marker for each feature and add to the map
+				let oneMarker = new mapboxgl.Marker(el);
+				oneMarker.setLngLat(newLatLng);
+				oneMarker.setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3>' + types_names[out[i]["type"]] + '</h3><p><h4>'+desc+'</p></h4>'));
+				oneMarker.addTo(map);
 
-            // save the marker into currentMarkers
-            currentMarkers.push(oneMarker);
+				// save the marker into currentMarkers
+				currentMarkers.push(oneMarker);
+			}
+
 		}
 	}).catch(err => { throw err });
 });

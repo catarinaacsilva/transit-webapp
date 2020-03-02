@@ -13,8 +13,8 @@ import java.util.List;
 
 @RequestMapping("/")
 public class mainController {
-
-    @RequestMapping("/")
+    @RequestMapping(value={"/", "/accident", "/congestion", "/disabledvehicle", "/masstransit", "/miscellaneous", "/othernews",
+            "/plannedevent", "/roadhazard", "/construction", "/alert", "/weather"})
     public String getIndex() {
         return "index.html";
     }
