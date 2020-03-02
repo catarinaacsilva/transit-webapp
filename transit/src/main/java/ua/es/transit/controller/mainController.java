@@ -15,7 +15,11 @@ import java.util.List;
 public class mainController {
 
     @RequestMapping("/")
-    public String getServerInfo() {
+    public String getIndex() {
         return "index.html";
+    }
+    @RequestMapping("/statistics")
+    public String getStatistics() {
+        return "statistics.html";
     }
 }
