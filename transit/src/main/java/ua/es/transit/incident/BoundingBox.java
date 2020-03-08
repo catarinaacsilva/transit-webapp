@@ -3,6 +3,7 @@ package ua.es.transit.incident;
 import java.io.Serializable;
 
 public class BoundingBox implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final GeoPoint NW, SE;
 
     public BoundingBox(double lat0,  double lon0, double lat1,  double lon1) {

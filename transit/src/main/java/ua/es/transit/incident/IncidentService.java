@@ -1,9 +1,11 @@
 package ua.es.transit.incident;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ua.es.transit.config.Config;
 import ua.es.transit.http.HTTP;
+import ua.es.transit.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,45 +19,46 @@ public class IncidentService {
 
     private static final Pattern pattern = Pattern.compile("\\(([^)]+)\\)");
 
-    @Cacheable(value="boundingbox", key="BoundingBox(#lat0, #lon0, #lat1, #lon1)")
-    public static List<Incident> getIncidents(double lat0, double lon0, double lat1, double lon1) {
+    @Autowired
+    IncidentRepository repository;
+
+    public void save(final Incident incident) {
+        repository.save(incident);
+    }
+
+    @Cacheable(value="boundingbox", key="new ua.es.transit.incident.BoundingBox(#lat0, #lon0, #lat1, #lon1)")
+    public List<Incident> getIncidents(final double lat0, final double lon0, final double lat1, final double lon1) {
         return getIncidents(new GeoPoint(lat0, lon0), new GeoPoint(lat1, lon1));
     }
 
-    @Cacheable(value="boundingbox", key="BoundingBox(#p1, #p2)")
-    public static List<Incident> getIncidents(GeoPoint p1, GeoPoint p2) {
-        List<Incident> list = new ArrayList<>();
+    @Cacheable(value="boundingbox", key="new ua.es.transit.incident.BoundingBox(#p1, #p2)")
+    public List<Incident> getIncidents(final GeoPoint p1, final GeoPoint p2) {
+        final List<Incident> list = new ArrayList<>();
 
         // Todas as keys ficam guardadas no ficheiro config.cfg
-        Config cfg = new Config();
-        String key = cfg.getProperty("key");
+        final Config cfg = new Config();
+        final String key = cfg.getProperty("key");
 
         try {
-            Map<String, Object> mapJson = HTTP.getJson("http://dev.virtualearth.net/REST/v1/Traffic/Incidents/" + p1 + "," + p2 + "?key=" + key);
-            //System.out.println(mapJson);
-            //ObjectMapper mapper = new ObjectMapper();
-            //String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(mapJson);
-            //String json = mapper.writeValueAsString(mapJson);
-            //System.out.println(json);
-            List<Object> resourceSets = (List<Object>) mapJson.get("resourceSets");
+            final Map<String, Object> mapJson = HTTP.getJson("http://dev.virtualearth.net/REST/v1/Traffic/Incidents/" + p1 + "," + p2 + "?key=" + key);
+            final List<Object> resourceSets = Utils.cast(mapJson.get("resourceSets"));
 
-            for (Object o1 : resourceSets) {
-                Map<String, Object> resourceSet = (Map<String, Object>) o1;
-                List<Object> resources = (List<Object>) resourceSet.get("resources");
-                for (Object o2 : resources) {
-                    Map<String, Object> resource = (Map<String, Object>) o2;
-                    Map<String, Object> point = (Map<String, Object>) resource.get("point");
-                    List<Object> coordinates = (List<Object>) point.get("coordinates");
-                    GeoPoint p = new GeoPoint((Double) coordinates.get(0), (Double) coordinates.get(1));
-                    String date = (String) resource.get("lastModified");
-                    Matcher m = pattern.matcher(date);
+            for (final Object o1 : resourceSets) {
+                final Map<String, Object> resourceSet = Utils.cast(o1);
+                final List<Object> resources = Utils.cast(resourceSet.get("resources"));
+                for (final Object o2 : resources) {
+                    final Map<String, Object> resource = Utils.cast(o2);
+                    final Map<String, Object> point = Utils.cast(resource.get("point"));
+                    final List<Object> coordinates = Utils.cast(point.get("coordinates"));
+                    final String date = (String) resource.get("lastModified");
+                    final Matcher m = pattern.matcher(date);
                     m.find();
-                    Date d = new Date(Long.parseLong(m.group(1)));
-                    list.add(new Incident((String) resource.get("description"), d,
-                            (Boolean) resource.get("roadClosed"), p, (Integer) resource.get("type")));
+                    final Date d = new Date(Long.parseLong(m.group(1)));
+                    list.add(new Incident((String) resource.get("description"), d, (Boolean) resource.get("roadClosed"),
+                            (Double) coordinates.get(0), (Double) coordinates.get(1), (Integer) resource.get("type")));
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
 

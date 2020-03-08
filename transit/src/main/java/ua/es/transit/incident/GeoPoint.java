@@ -1,7 +1,16 @@
 package ua.es.transit.incident;
 
-public class GeoPoint {
-    protected final double lat, lon;
+import java.io.Serializable;
+
+public class GeoPoint implements Serializable{
+    private static final long serialVersionUID = 1L;
+    protected final double lat;
+    protected final double lon;
+
+    public GeoPoint() {
+        this.lat = 0;
+        this.lon = 0;
+    }
 
     public GeoPoint(double lat, double lon) {
         this.lat = lat;

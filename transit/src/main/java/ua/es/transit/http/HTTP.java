@@ -2,6 +2,8 @@ package ua.es.transit.http;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ua.es.transit.utils.Utils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -58,7 +60,7 @@ public class HTTP {
         InputStream is = isError ? errorStream(con) : inputStream(con);
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> jsonMap = mapper.readValue(is, Map.class);
+        Map<String, Object> jsonMap = Utils.cast(mapper.readValue(is, Map.class));
 
         con.disconnect();
 

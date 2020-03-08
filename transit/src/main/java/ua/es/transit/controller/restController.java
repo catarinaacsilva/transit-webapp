@@ -21,4 +21,14 @@ public class restController {
                                        @RequestParam double lat1, @RequestParam double lon1) {
         return incidentService.getIncidents(lat0, lon0, lat1, lon1);
     }
+
+    @GetMapping("/stats")
+    public List<Incident> getIncidentsStats(@RequestParam double lat0, @RequestParam double lon0,
+                                            @RequestParam double lat1, @RequestParam double lon1) {
+        List<Incident> incidents = incidentService.getIncidents(lat0, lon0, lat1, lon1);
+        for(Incident i : incidents) {
+            incidentService.save(i);
+        }
+        return incidents;
+    }
 }

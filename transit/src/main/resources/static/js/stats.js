@@ -1,5 +1,5 @@
 let map = new Array();
-let url = 'incidents?lat0=38.37643137787455&lon0=-9.803304573961498&lat1=40.60602702401283&lon1=-7.12171660867034';
+let url = 'stats?lat0=38.37643137787455&lon0=-9.803304573961498&lat1=40.60602702401283&lon1=-7.12171660867034';
 let list = [];
 
 // store types names
