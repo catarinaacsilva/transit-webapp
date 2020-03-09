@@ -22,8 +22,13 @@ public class IncidentService {
     @Autowired
     IncidentRepository repository;
 
-    public void save(final Incident incident) {
-        repository.save(incident);
+    // Save student entity in the h2 database.
+    public void saveAll(final List<Incident> incidents) {
+        repository.saveAll(incidents);
+    }
+
+    public List<Incident> findAll() {
+        return (List<Incident>) repository.findAll();
     }
 
     @Cacheable(value="boundingbox", key="new ua.es.transit.incident.BoundingBox(#lat0, #lon0, #lat1, #lon1)")

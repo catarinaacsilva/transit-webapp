@@ -57,6 +57,23 @@ public class Incident implements Serializable {
     }
 
     @Override
+    public boolean equals(Object o) {
+        // self check
+        if (this == o)
+            return true;
+        // null check
+        if (o == null)
+            return false;
+        // type check and cast
+        if (getClass() != o.getClass())
+            return false;
+
+        // field comparison
+        Incident i = (Incident) o;
+        return description.equals(i.description) && lat == i.lat && lon == i.lon;
+    }
+
+    @Override
     public String toString() {
         return String.format("Type: %d%nDescription: %s%nLocation: %s%nRoad Closed: %s%nLast Modified: %s%n",
                 type, description, getPoint(), roadClosed, lastModified);
