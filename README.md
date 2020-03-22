@@ -7,15 +7,25 @@ The system is available to all the people that are interested in seeing the inci
 ## Requisites
 
 - Java >= 8
-- Kafka
+- Kafka (or)
+- docker-compose
 
 ## Run
 
-1. If you aren't the Kafka installed you can run docker-compose available on my github to instantiate the Kafka.
+1. If you haven't Kafka installed you can run docker-compose available on the Kafka-docker directory to deploy the Kafka
 
-    1.1 Open terminal and run `git clone https://github.com/catarinaacsilva/kafka-docker.git`
-    1.2 Run `docker-compose up`
-        
+    1.1 On kafka-docker directory run `docker-compose up`
+
+2. Start transit spring-boot project
+
+3. Start the cp virtual sensor
+    
+    3.1 Inside cp folder run
+    ```bash
+    mvn clean compile exec:java
+    ```
+
+4. Open brower [here](localhost:8080)
 
 ## Development information
 
@@ -37,6 +47,15 @@ The system is available to all the people that are interested in seeing the inci
 
 2. In this file write just `key = XXXX` (XXXX is the key)
 
+#### Databse H2 - view data present in the database
+
+1. Access "http://localhost:8080/h2-console/"
+
+2. JDBC URL: "jdbc:h2:/"+ (Where the folder transit is located) +"/transit/db/myDB" -> path to "myDB"
+
+3. User Name: sa / Password: password
+
+4. Connect
 
 #### Some Notes - gitignore
 
