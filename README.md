@@ -18,14 +18,14 @@ The system is available to all the people that are interested in seeing the inci
 
 2. Start transit spring-boot project
 
-3. Start the cp virtual sensor
+3. Open brower [here](localhost:8080)
+
+4. Start the cp virtual sensor
     
-    3.1 Inside cp folder run
+    4.1 Inside cp folder run
     ```bash
     mvn clean compile exec:java
     ```
-
-4. Open brower [here](localhost:8080)
 
 ## Development information
 
