@@ -1,8 +1,6 @@
-package ua.es.transit.http;
+package pt.ua.deti;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import ua.es.transit.utils.Utils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,11 +15,12 @@ import java.util.zip.InflaterInputStream;
  * HTTP library.
  * <p>
  * Implements the REST GET method.
- *
+ * 
  * @author Catarina Silva
  * @version 1.0
  */
 public class HTTP {
+
     /**
      * Utility class, lets make the constructor private.
      */

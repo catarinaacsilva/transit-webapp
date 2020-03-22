@@ -16,4 +16,9 @@ public class mainController {
     public String getStatistics() {
         return "statistics.html";
     }
+
+    @RequestMapping("/notifications")
+    public String getNotifications() {
+        return "notifications.html";
+    }
 }
