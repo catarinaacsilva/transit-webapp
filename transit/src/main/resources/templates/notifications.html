@@ -1,18 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Delay Notifications</title>
-</head>
-<body>
-<textarea type="text"  id="textArea" placeholder="Push Notifications..." rows="15" cols="60"></textarea>
+<html xmlns:th="http://www.thymeleaf.org">
 
-<script
-        src="https://code.jquery.com/jquery-3.4.1.min.js"
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Transit_ES</title>
+
+    <!-- Custom fonts for this template -->
+    <!-- <link th:href="@{vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css}"> -->
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{css/sb-admin-2.min.css}" rel="stylesheet">
+
+    <!-- Markers style -->
+    <link th:href="@{css/markers.css}" rel="stylesheet">
+
+    <script th:src="@{js/trains.js}"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- Maps -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css' rel='stylesheet' />
+
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Transit</div>
+        </a>
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Heading -->
+        <div class="sidebar-heading"></div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseVehicle" aria-expanded="true" aria-controls="collapseVehicle">
+                <i class="fas fa-car"></i>
+                <span>Vehicles</span>
+            </a>
+            <div id="collapseVehicle" class="collapse" aria-labelledby="headingVehicle" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/accident">Accidents <i class="fas fa-car-crash"></i></a>
+                    <a class="collapse-item" href="/congestion">Congestion <i class="fas fa-car"></i></a>
+                    <a class="collapse-item" href="/disabledvehicle">Disabled Vehicle <i class="fas fa-times-circle"></i></a>
+                    <a class="collapse-item" href="/masstransit">Mass Transit <i class="fas fa-traffic-light"></i></a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMiscellaneous" aria-expanded="true" aria-controls="collapseMiscellaneous">
+                <i class="fas fa-copy"></i>
+                <span>Miscellaneous</span>
+            </a>
+            <div id="collapseMiscellaneous" class="collapse" aria-labelledby="headingMiscellaneous" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/miscellaneous">Miscellaneous <i class="fas fa-copy"></i></a>
+                    <a class="collapse-item" href="/othernews">Other News <i class="fas fa-newspaper"></i></a>
+                    <a class="collapse-item" href="/plannedevent">Planned Events <i class="fas fa-calendar-alt"></i></a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseConstruction" aria-expanded="true" aria-controls="collapseConstruction">
+                <i class="fas fa-hard-hat"></i>
+                <span>Construction</span>
+            </a>
+            <div id="collapseConstruction" class="collapse" aria-labelledby="headingConstruction" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/roadhazard">Road Hazard <i class="fas fa-road"></i></a>
+                    <a class="collapse-item" href="/construction">Construction <i class="fas fa-hard-hat"></i></a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Nav Item - Utilities Collapse Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseWeather" aria-expanded="true" aria-controls="collapseWeather">
+                <i class="fas fa-cloud-sun"></i>
+                <span>Weather</span>
+            </a>
+            <div id="collapseWeather" class="collapse" aria-labelledby="headingWeather" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <a class="collapse-item" href="/alert">Alert <i class="fas fa-exclamation-triangle"></i></a>
+                    <a class="collapse-item" href="/weather">Weather <i class="fas fa-cloud-sun"></i></a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <li class="nav-item">
+            <a class="nav-link" href="statistics">
+                <i class="far fa-chart-bar"></i>
+                <span>Statistics</span>
+            </a>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Notifications</span>
+            </a>
+        </li>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                </br>
+                <!-- Area Chart -->
+                <div>
+                    <div class="card shadow mb-4">
+                        <!-- Card Body -->
+                        <div class="card-body" style='width: 100%; height: 93vh;'>
+                            <div id='container' align="center" style='width: 100%; height: 100%;'>
+                                <br><br>
+                                <h2 style='text-align: center; color: black'><b>Train Delays (CP)</b></h2>
+                                <br><br>
+                                <p id="no">No New Notifications!</p>
+                                <ul id="del" class="list-group" style="width: 90%; height: 70%; overflow: auto" ></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{js/sb-admin-2.js}"></script>
+
+<!-- Page level plugins -->
+<script th:src="@{vendor/chart.js/Chart.min.js}"></script>
+
+<!-- Page level custom scripts -->
+<script th:src="@{js/demo/chart-area-demo.js}"></script>
+<script th:src="@{js/demo/chart-pie-demo.js}"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
 <script src="js/notifications.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="js/stomp.min.js"></script>
+
 </body>
+
 </html>
